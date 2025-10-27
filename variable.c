@@ -11,7 +11,7 @@ typedef enum {
 } TypeValeur;
 
 struct Variable {
-    TypeValeur type;  // pour savoir quel genre de valeur c’est
+    TypeValeur type;  // pour savoir quel genre de valeur c’est 
     union {
         long long int i;
         long double f;
@@ -31,8 +31,35 @@ struct Variable CREATE_INTEGER(long long int value , char *name){
 
 }
 
+struct Variable CREATE_FLOAT(long double value,char *name){
+    struct Variable new;
+    new.value.f=value;
+    new.type=TYPE_FLOAT;
+    new.name=malloc(strlen(name)+1);
+    strcpy(new.name,name);
+    return new;
+}
+struct Variable CREATE_CHAR(char *value,char *name){
+    struct Variable new;
+    new.value.s=malloc(strlen(value)+1);
+    strcpy(new.value.s,value);
+    new.name=malloc(strlen(name)+1);
+    strcpy(new.name,name);
+    return new;
+}
+
+struct Variable CREATE_BOOL(int value,char *name){
+    struct Variable new;
+    new.value.b=value;
+    new.name=malloc(strlen(name)+1);
+    strcpy(new.name,name);
+    return new;
+}
+
 int main(void){
     struct Variable p;
-    p=CREATE_INTEGER(14,"papa");
-    printf(p.name);
+    p = CREATE_BOOL(1, "value");
+    printf("%d\n", p.value.b);  // <-- correction ici
+    free(p.name);  // libération mémoire
+    return 0;
 }
