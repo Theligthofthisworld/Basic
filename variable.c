@@ -1,6 +1,7 @@
 #include  <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "hashmap.h"
 
 typedef enum {
     TYPE_INT,
@@ -18,7 +19,7 @@ struct Variable {
         char *s;
         int b; // pour booléen
     } value;
-    char *name; // nom de la variable (utile pour stockage)
+    char *name; // nom de la variable (ca va m'aider avec les hashmap)
 };
 
 struct Variable CREATE_INTEGER(long long int value , char *name){
@@ -55,11 +56,29 @@ struct Variable CREATE_BOOL(int value,char *name){
     strcpy(new.name,name);
     return new;
 }
+int Variable_compare(const void *a, const void *b, void *udata) {
+    const struct Variable *va = a;
+    const struct Variable *vb = b;
+    return strcmp(vb->name, va->name);
+}
+
+uint64_t Variable_hash(const void *item, uint64_t seed0, uint64_t seed1) {
+    const struct Variable *var = item;
+    return hashmap_sip(var->name, strlen(var->name), seed0, seed1);
+}
 
 int main(void){
-    struct Variable p;
-    p = CREATE_BOOL(1, "value");
-    printf("%d\n", p.value.b);  // <-- correction ici
-    free(p.name);  // libération mémoire
+    struct Variable i=CREATE_INTEGER(45,"mam");
+    struct Variable in=CREATE_INTEGER(45,"mama");
+
+    struct hashmap *map=hashmap_new(sizeof(struct Variable),0,0,0,Variable_hash,Variable_compare,NULL,NULL);
+    hashmap_set(map,&i);
+    hashmap_set(map,&in);
+    char name[4]="mam";
+    struct Variable *v = hashmap_get(map, &(struct Variable){ .name = "mam" });
+    printf("%s  are %d",v->name,v->value.i);
     return 0;
+
+
+    
 }
