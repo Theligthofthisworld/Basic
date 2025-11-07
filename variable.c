@@ -73,7 +73,7 @@ struct hashmap* create_hashmap(void){
 /* Exemple de test 
 int main(void) {
     struct Variable i = CREATE_INTEGER(46, "mam");
-    struct Variable in = CREATE_INTEGER(45, "mam");
+    struct Variable in = CREATE_INTEGER(45, "mama");
 
     struct hashmap *map = hashmap_new(sizeof(struct Variable), 0, 0, 0, Variable_hash, Variable_compare, NULL, NULL);
     hashmap_set(map, &i);
@@ -87,6 +87,3 @@ int main(void) {
 }
  je suis trop fier je l'ai fais eul :) */
 
-int main(void){
-    return 0;
-}
