@@ -75,7 +75,7 @@ uint64_t Variable_hash(const void *item, uint64_t seed0, uint64_t seed1) {
     return hashmap_sip(var->name, strlen(var->name), seed0, seed1);
 }
 
-int main(void){
+/*int main(void){
     struct Variable i=CREATE_INTEGER(46,"mam");
     struct Variable in=CREATE_INTEGER(45,"mam");
 
@@ -90,4 +90,4 @@ int main(void){
 
 
     
-}
+}*/
