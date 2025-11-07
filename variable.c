@@ -1,35 +1,11 @@
-#include  <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "hashmap.h"
+#include "variable.h"
 
-typedef enum {
-    TYPE_INT,
-    TYPE_FLOAT,
-    TYPE_STRING,
-    TYPE_BOOL,
-    TYPE_NULL
-} TypeValeur;
-
-struct Variable {
-    TypeValeur type;  // pour savoir quel genre de valeur c’est 
-    union {
-        long long int i;
-        long double f;
-        char *s;
-        int b; // pour booléen
-    } value;
-    char *name; // nom de la variable (ca va m'aider avec les hashmap)
-};
 
 struct Variable CREATE_INTEGER(long long int value , char *name){
     struct Variable new;
     new.value.i=value;
     new.type=TYPE_INT;
     new.name=malloc(strlen(name)+1);
-    if(!new.value.s) {
-    fprintf(stderr, "Memory allocation error during variable creation %s \n" , name);
-    exit(1);
     strcpy(new.name,name);
     return new;
 
@@ -40,9 +16,6 @@ struct Variable CREATE_FLOAT(long double value,char *name){
     new.value.f=value;
     new.type=TYPE_FLOAT;
     new.name=malloc(strlen(name)+1);
-    if(!new.value.s) {
-    fprintf(stderr, "Memory allocation error during variable creation %s \n" , name);
-    exit(1);
     strcpy(new.name,name);
     return new;
 }
@@ -50,14 +23,11 @@ struct Variable CREATE_STRING(char *value,char *name){
     struct Variable new;
     new.value.s=malloc(strlen(value)+1);
     if(!new.value.s) {
-    fprintf(stderr, "Memory allocation error during variable creation %s \n" , name);
+    fprintf(stderr, "Memory allocation error during variable creation\n");
     exit(1);
 }
     strcpy(new.value.s,value);
     new.name=malloc(strlen(name)+1);
-    if(!new.value.s) {
-    fprintf(stderr, "Memory allocation error during variable creation %s \n" , name);
-    exit(1);
     strcpy(new.name,name);
     return new;
 }
@@ -82,7 +52,7 @@ struct Variable CREATE_BOOL(int value,char *name){
 int Variable_compare(const void *a, const void *b, void *udata) {
     const struct Variable *va = a;
     const struct Variable *vb = b;
-    return strcmp(va->name, vb->name)
+    return strcmp(va->name, vb->name);
 
 }
 
