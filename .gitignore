@@ -2,4 +2,4 @@
 *.out 
 *.txt
 test*.*
-hashmapdir.c\
+.vscode/
