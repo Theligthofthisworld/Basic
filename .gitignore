@@ -1,5 +1,12 @@
+
 *.exe
-*.out 
+*.out
+
+
 *.txt
+
+
 test*.*
-hashmapdir.c\
+
+
+.vscode/
