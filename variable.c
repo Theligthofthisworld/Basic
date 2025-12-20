@@ -1,5 +1,8 @@
 #include "variable.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "hashmap.h"
 
 struct Variable CREATE_INTEGER(long long int value , char *name){
     struct Variable new;
@@ -7,93 +10,56 @@ struct Variable CREATE_INTEGER(long long int value , char *name){
     new.type=TYPE_INT;
     new.name=malloc(strlen(name)+1);
     if(!new.name) {
-    fprintf(stderr, "Memory allocation error during variable creation of %s \n", name);
-    exit(1);
-}
-    strcpy(new.name,name);
-    return new;
-
-}
-
-struct Variable CREATE_FLOAT(long double value,char *name){
-    struct Variable new;
-    new.value.f=value;
-    new.type=TYPE_FLOAT;
-    new.name=malloc(strlen(name)+1);
-    if(!new.name) {
-    fprintf(stderr, "Memory allocation error during variable creation of %s \n", name);
-    exit(1);
-}
+        fprintf(stderr, "Memory allocation error\n");
+        exit(1);
+    }
     strcpy(new.name,name);
     return new;
 }
-struct Variable CREATE_STRING(char *value,char *name){
-    struct Variable new;
-    new.value.s=malloc(strlen(value)+1);
-    if(!new.value.s) {
-    fprintf(stderr, "Memory allocation error during variable creation of  %s \n" , name);
-    exit(1);
-}
-    strcpy(new.value.s,value);
-    new.name=malloc(strlen(name)+1);
-    if(!new.name) {
-    fprintf(stderr, "Memory allocation error during variable creation of %s \n", name);
-    exit(1);
-}
-    strcpy(new.name,name);
-    return new;
-}
-
-
-
-
-
-struct Variable CREATE_CHAR(char *value, char *name) {
-    struct Variable new;
-    new.value.s = malloc(strlen(value) + 1);
-    strcpy(new.value.s, value);
-    new.type = TYPE_STRING;
-    new.name = malloc(strlen(name) + 1);
-    strcpy(new.name, name);
-    return new;
-}
-
-
-struct Variable CREATE_BOOL(int value, char *name) {
-    struct Variable new;
-    new.value.b = value;
-    new.type = TYPE_BOOL;
-    new.name = malloc(strlen(name) + 1);
-    strcpy(new.name, name);
-    return new;
-}
-
 
 int Var_free(void *item) {
-    struct Variable *v = (struct Variable *)item;
+    struct Variable *v = item;
     if (v->name) free(v->name);
     if (v->type == TYPE_STRING && v->value.s) free(v->value.s);
-    return 0;  
+    return 0;
 }
-
 
 int Variable_compare(const void *a, const void *b, void *udata) {
     const struct Variable *va = a;
     const struct Variable *vb = b;
     return strcmp(va->name, vb->name);
-
 }
 
-
 uint64_t Variable_hash(const void *item, uint64_t seed0, uint64_t seed1) {
-    const struct Variable *var = (const struct Variable *)item;
+    const struct Variable *var = item;
     return hashmap_sip(var->name, strlen(var->name), seed0, seed1);
 }
 
 struct hashmap* Create_hashmap(void){
-    return hashmap_new(sizeof(struct Variable),0,0,0,Variable_hash,Variable_compare,NULL,NULL);
+    return hashmap_new(sizeof(struct Variable), 0, 0, 0, Variable_hash, Variable_compare, NULL, Var_free);
 }
 
+int insert_hashmap(struct Variable v, struct hashmap *map){
+     hashmap_set(map, &v);
+     return 0;
+}
 
+/*int main(void){
+    struct hashmap *map = Create_hashmap();
+    struct Variable v = CREATE_INTEGER(45,"papa");
+    insert_hashmap(v, map);
 
+    // Création d'une clé temporaire
+    struct Variable key = {0};
+    key.name = "papa";
 
+    struct Variable *b = hashmap_get(map, &key);
+    if(b){
+        printf("Trouvé: %lld\n", b->value.i);
+    } else {
+        printf("Pas trouvé\n");
+    }
+
+    // Libération de la hashmap
+    hashmap_free(map);
+}*/

@@ -1,5 +1,12 @@
 import ply.lex as lex
 import ply.yacc as yacc
+from variableC_interface import CInterface_V
+
+
+Variable=CInterface_V(r"v-g01.dll")
+hashmap=Variable.lib.Create_hashmap()
+v=Variable.lib.CREATE_INTEGER(45,b'papa')
+
 
 # ----- TOKENS -----
 tokens = ('NOMBRE', 'IDENTIFIANT', 'PLUS', 'MOINS', 'EGALE')
