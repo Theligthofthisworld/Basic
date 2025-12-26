@@ -4,18 +4,51 @@
 #include <string.h>
 #include "hashmap.h"
 
-struct Variable CREATE_INTEGER(long long int value , char *name){
-    struct Variable new;
-    new.value.i=value;
-    new.type=TYPE_INT;
-    new.name=malloc(strlen(name)+1);
-    if(!new.name) {
-        fprintf(stderr, "Memory allocation error\n");
-        exit(1);
-    }
-    strcpy(new.name,name);
+/* To compile the file gcc -shared -o vg-01.dll variable.c hashmap.c -Wl,--out-implib
+
+*/
+
+struct Variable* CREATE_INTEGER(long long int value , char *name){
+    struct Variable *new;
+    new->value.i=value;
+    new->type=TYPE_INT;
+    new->name=malloc(strlen(name)+1);
+    strcpy(new->name,name);
+    return new;
+
+}
+
+struct Variable* CREATE_FLOAT(long double value,char *name){
+    struct Variable *new = malloc(sizeof(struct Variable));
+    if(!new) exit(1);
+
+    new->type = TYPE_FLOAT;
+    new->value.f = value;
+
+    new->name = malloc(strlen(name)+1);
+    strcpy(new->name, name);
+
     return new;
 }
+
+struct Variable* CREATE_STRING(char *value,char *name){
+    struct Variable *new = malloc(sizeof(struct Variable));
+    if(!new) exit(1);
+
+    new->type = TYPE_STRING;
+
+    new->value.s = malloc(strlen(value)+1);
+    strcpy(new->value.s, value);
+
+    new->name = malloc(strlen(name)+1);
+    strcpy(new->name, name);
+
+
+    return new;
+}
+
+
+
 
 int Var_free(void *item) {
     struct Variable *v = item;
@@ -39,27 +72,36 @@ struct hashmap* Create_hashmap(void){
     return hashmap_new(sizeof(struct Variable), 0, 0, 0, Variable_hash, Variable_compare, NULL, Var_free);
 }
 
-int insert_hashmap(struct Variable v, struct hashmap *map){
-     hashmap_set(map, &v);
+int insert_hashmap(struct Variable* v, struct hashmap *map){
+     hashmap_set(map, v);
      return 0;
 }
 
 /*int main(void){
+    //setbuf(stdout, NULL);
+    //fflush(stdout);
     struct hashmap *map = Create_hashmap();
-    struct Variable v = CREATE_INTEGER(45,"papa");
-    insert_hashmap(v, map);
+    printf("Code : ");// n'effacez pas ici sinon rien n'apparaitras dans le terminal DONT ERASE THIS LINES
+    struct Variable *v = CREATE_INTEGER(45,"papa");
+    hashmap_set(map, v);
 
-    // Création d'une clé temporaire
-    struct Variable key = {0};
+    struct Variable key;
     key.name = "papa";
+    key.type = TYPE_INT;
 
-    struct Variable *b = hashmap_get(map, &key);
+    const struct Variable *b = hashmap_get(map, &key);
     if(b){
-        printf("Trouvé: %lld\n", b->value.i);
+        printf("Trouve: %lld\n", b->value.i);
     } else {
-        printf("Pas trouvé\n");
+        printf("Pas trouve\n");
     }
 
-    // Libération de la hashmap
     hashmap_free(map);
+
+    return 0;
 }*/
+
+int main(void){
+    printf("%zu\n",sizeof(struct Variable));
+    return 0;
+}

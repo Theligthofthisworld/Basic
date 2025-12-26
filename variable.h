@@ -18,7 +18,7 @@ struct Variable {
     TypeValeur type;
     union {
         long long int i;
-        long double f;
+        double f;
         char *s;
         int b;
     } value;
@@ -26,14 +26,14 @@ struct Variable {
 };
 
 
-struct Variable CREATE_INTEGER(long long int value, char *name);
-struct Variable CREATE_FLOAT(long double value, char *name);
-struct Variable CREATE_STRING(char *value, char *name);
-struct Variable CREATE_BOOL(int value, char *name);
+struct Variable* CREATE_INTEGER(long long int value, char *name);
+struct Variable* CREATE_FLOAT(long double value, char *name);
+struct Variable* CREATE_STRING(char *value, char *name);
+struct Variable* CREATE_BOOL(int value, char *name);
 int Var_free(void *item);
 int Variable_compare(const void *a,const void *b, void *udata);
 uint64_t Variable_hash(const void *item, uint64_t seed0, uint64_t seed1);
-int insert_hashmap(struct Variable v, struct hashmap *map);
+int insert_hashmap(struct Variable *v, struct hashmap *map);
 struct hashmap*  Create_hashmap(void);
 
 #endif
