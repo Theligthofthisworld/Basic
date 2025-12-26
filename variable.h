@@ -27,7 +27,7 @@ struct Variable {
 
 
 struct Variable* CREATE_INTEGER(long long int value, char *name);
-struct Variable* CREATE_FLOAT(long double value, char *name);
+struct Variable* CREATE_FLOAT(double value, char *name);
 struct Variable* CREATE_STRING(char *value, char *name);
 struct Variable* CREATE_BOOL(int value, char *name);
 int Var_free(void *item);

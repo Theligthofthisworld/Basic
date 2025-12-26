@@ -43,7 +43,6 @@ class CInterface_V:
         """)
 print("rehello")
 c = CInterface_V('vg-01.dll')
-v = c.lib.CREATE_STRING(b"PAPA", b"nde")
-s = c.ffi.string(v.value.s).decode("utf-8")
-print(s)
+v = c.lib.CREATE_FLOAT(45.56,b"PAPA")
+print(v.value.f)
 

@@ -4,27 +4,26 @@
 #include <string.h>
 #include "hashmap.h"
 
-/* To compile the file gcc -shared -o vg-01.dll variable.c hashmap.c -Wl,--out-implib
-
-*/
+/* To compile the file gcc -shared -o vg-01.dll variable.c hashmap.c -Wl,--out-implib */
 
 struct Variable* CREATE_INTEGER(long long int value , char *name){
-    struct Variable *new;
-    new->value.i=value;
-    new->type=TYPE_INT;
-    new->name=malloc(strlen(name)+1);
-    strcpy(new->name,name);
+    struct Variable *new = malloc(sizeof(struct Variable)); 
+    if(!new) exit(1);
+    
+    new->value.i = value;
+    new->type = TYPE_INT;
+    new->name = malloc(strlen(name) + 1);
+    strcpy(new->name, name);
     return new;
-
 }
 
-struct Variable* CREATE_FLOAT(long double value,char *name){
+
+struct Variable* CREATE_FLOAT(double value,char *name){
     struct Variable *new = malloc(sizeof(struct Variable));
     if(!new) exit(1);
 
-    new->type = TYPE_FLOAT;
     new->value.f = value;
-
+    new->type = TYPE_FLOAT;
     new->name = malloc(strlen(name)+1);
     strcpy(new->name, name);
 
@@ -81,27 +80,17 @@ int insert_hashmap(struct Variable* v, struct hashmap *map){
     //setbuf(stdout, NULL);
     //fflush(stdout);
     struct hashmap *map = Create_hashmap();
-    printf("Code : ");// n'effacez pas ici sinon rien n'apparaitras dans le terminal DONT ERASE THIS LINES
-    struct Variable *v = CREATE_INTEGER(45,"papa");
-    hashmap_set(map, v);
-
-    struct Variable key;
-    key.name = "papa";
-    key.type = TYPE_INT;
-
-    const struct Variable *b = hashmap_get(map, &key);
-    if(b){
-        printf("Trouve: %lld\n", b->value.i);
-    } else {
-        printf("Pas trouve\n");
-    }
-
+    //printf("Code : ") n'effacez pas ici sinon rien n'apparaitras dans le terminal DONT ERASE THIS LINES
+    struct Variable *v = CREATE_FLOAT(45.5656,"papa");
+    
+    printf("%f",v->value.f);
+    Var_free(v);
     hashmap_free(map);
 
     return 0;
 }*/
 
-int main(void){
+/*int main(void){
     printf("%zu\n",sizeof(struct Variable));
     return 0;
-}
+}*/
