@@ -1,7 +1,6 @@
 # De cette fonction on peut appeler les fonctions relatives a la gestion des fonctions
 
 from cffi import FFI
-print("hello")
 class CInterface_V:
     def __init__(self, dll_path):
         self.ffi = FFI()
@@ -41,8 +40,5 @@ class CInterface_V:
             void hashmap_free(struct hashmap *map);
             const void *hashmap_set(struct hashmap *map, const void *item);
         """)
-print("rehello")
-c = CInterface_V('vg-01.dll')
-v = c.lib.CREATE_FLOAT(45.56,b"PAPA")
-print(v.value.f)
+
 

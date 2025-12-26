@@ -2,10 +2,9 @@ import ply.lex as lex
 import ply.yacc as yacc
 from variableC_interface import CInterface_V
 
+if __name__=="__main__":
+    Variable=CInterface_V(r"vg-01.dll")
 
-Variable=CInterface_V(r"v-g01.dll")
-hashmap=Variable.lib.Create_hashmap()
-v=Variable.lib.CREATE_INTEGER(45,b'papa')
 
 
 # ----- TOKENS -----
@@ -40,6 +39,7 @@ def p_expression_nombre(p):
 def p_expression_identifiant(p):
     'expression : IDENTIFIANT EGALE NOMBRE'
     p[0]=[p[1],p[3]]
+    varr=Variable.lib.CREATE_INTEGER(p[3],bytes(p[1].encode()))
 
 def p_error(p):
     print("Erreur de syntaxe !")
@@ -51,3 +51,4 @@ parser = yacc.yacc()
 # ----- TEST -----
 resultat = parser.parse(" name = 15 ")
 print("Résultat =", resultat)
+
