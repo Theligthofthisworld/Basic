@@ -3,7 +3,8 @@ import ply.yacc as yacc
 from variableC_interface import CInterface_V
 
 if __name__=="__main__":
-    Variable=CInterface_V(r"vg-01.dll")
+    CInterface=CInterface_V(r"vg-01.dll")
+    hashmap=CInterface.lib.Create_hashmap()
 
 
 
@@ -39,7 +40,8 @@ def p_expression_nombre(p):
 def p_expression_identifiant(p):
     'expression : IDENTIFIANT EGALE NOMBRE'
     p[0]=[p[1],p[3]]
-    varr=Variable.lib.CREATE_INTEGER(p[3],bytes(p[1].encode()))
+    varr=CInterface.lib.CREATE_INTEGER(p[3],bytes(p[1].encode()))
+    CInterface.lib.hashmap_set(hashmap,varr)
 
 def p_error(p):
     print("Erreur de syntaxe !")
@@ -51,4 +53,12 @@ parser = yacc.yacc()
 # ----- TEST -----
 resultat = parser.parse(" name = 15 ")
 print("Résultat =", resultat)
+arr=CInterface.ffi.new("struct Variable *")
+arr.type=0
+arr.name=CInterface.ffi.new("char[]",b"name")
+varr=CInterface.lib.hashmap_get(hashmap,arr)
+var_ptr = CInterface.ffi.cast("struct Variable *", varr)
+print(var_ptr.value.i)
+
+
 

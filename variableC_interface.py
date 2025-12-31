@@ -16,7 +16,7 @@ class CInterface_V:
                 TYPE_NULL
             } TypeValeur;
 
-            typedef struct {
+            struct Variable{
                 TypeValeur type;
                 union {
                     long long int i;
@@ -25,20 +25,22 @@ class CInterface_V:
                     int b;
                 } value;
                 char *name;
-            } Variable;
+            } ;
         typedef struct hashmap hashmap;  // opaque
 
         """)
 
         self.ffi.cdef("""
-            Variable* CREATE_INTEGER(long long int value, char *name);
-            Variable* CREATE_FLOAT(long double value, char *name);
-            Variable* CREATE_STRING(char *value, char *name);
-            Variable* CREATE_BOOL(int value, char *name);
+            struct Variable* CREATE_INTEGER(long long int value, char *name);
+            struct Variable* CREATE_FLOAT(long double value, char *name);
+            struct Variable* CREATE_STRING(char *value, char *name);
+            struct Variable* CREATE_BOOL(int value, char *name);
             int Var_free(void *item);
             hashmap* Create_hashmap(void);
             void hashmap_free(struct hashmap *map);
             const void *hashmap_set(struct hashmap *map, const void *item);
+            const void *hashmap_get(const struct hashmap *map, const void *item);
+            const void *get_variable(struct hashmap *map,struct Variable *var);
         """)
 
 

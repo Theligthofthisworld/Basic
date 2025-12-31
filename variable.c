@@ -71,9 +71,8 @@ struct hashmap* Create_hashmap(void){
     return hashmap_new(sizeof(struct Variable), 0, 0, 0, Variable_hash, Variable_compare, NULL, Var_free);
 }
 
-int insert_hashmap(struct Variable* v, struct hashmap *map){
-     hashmap_set(map, v);
-     return 0;
+const void *get_variable(struct hashmap *map,struct Variable *var){
+    return hashmap_get(map,&var);
 }
 
 /*int main(void){
@@ -90,7 +89,21 @@ int insert_hashmap(struct Variable* v, struct hashmap *map){
     return 0;
 }*/
 
-/*int main(void){
-    printf("%zu\n",sizeof(struct Variable));
+int main(void){
+    struct hashmap *map = Create_hashmap();
+
+    struct Variable *v = CREATE_FLOAT(45.5656, "papa");
+
+    hashmap_set(map, v);   
+
+    struct Variable *var = hashmap_get(map, v);
+
+    if (var) {
+        printf("%f\n", var->value.f);
+    } else {
+        printf("Variable non trouvée\n");
+    }
+
+    hashmap_free(map);
     return 0;
-}*/
+}
