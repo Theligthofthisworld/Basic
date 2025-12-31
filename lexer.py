@@ -57,8 +57,8 @@ arr=CInterface.ffi.new("struct Variable *")
 arr.type=0
 arr.name=CInterface.ffi.new("char[]",b"name")
 varr=CInterface.lib.hashmap_get(hashmap,arr)
-var_ptr = CInterface.ffi.cast("struct Variable *", varr)
-print(var_ptr.value.i)
+var_ptr = CInterface.get_pointer_value(varr)
+print(CInterface.get_string_value(var_ptr.name))
 
 
 

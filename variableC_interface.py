@@ -42,5 +42,9 @@ class CInterface_V:
             const void *hashmap_get(const struct hashmap *map, const void *item);
             const void *get_variable(struct hashmap *map,struct Variable *var);
         """)
+    def get_pointer_value(self,pointer):
+        return self.ffi.cast("struct Variable *", pointer)
+    def get_string_value(self,pointer):
+        return self.ffi.string(pointer).decode("utf-8")
 
 
