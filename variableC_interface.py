@@ -1,7 +1,7 @@
 # De cette fonction on peut appeler les fonctions relatives a la gestion des fonctions
 
 from cffi import FFI
-class CInterface_V:
+class Variable_Interface:
     def __init__(self, dll_path):
         self.ffi = FFI()
         self.lib = self.ffi.dlopen(dll_path)
@@ -46,5 +46,16 @@ class CInterface_V:
         return self.ffi.cast("struct Variable *", pointer)
     def get_string_value(self,pointer):
         return self.ffi.string(pointer).decode("utf-8")
+    def search_var(self, name: str, hashmap):
+        temp = self.ffi.new("struct Variable *")
+        temp.name = self.ffi.new("char[]", name.encode("utf-8"))
+
+        temp_2 = self.lib.hashmap_get(hashmap, temp)
+
+        if temp_2 == self.ffi.NULL:
+            return (False, "not found")
+
+        return (True,temp_2)
+
 
 
