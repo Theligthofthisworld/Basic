@@ -1,58 +1,109 @@
 import ply.lex as lex
 import ply.yacc as yacc
+
+from ast_nodes import *
 from variableC_interface import Variable_Interface
 
-if __name__=="__main__":
-    Variable_mng=Variable_Interface(r"vg-01.dll")
-    hashmap=Variable_mng.lib.Create_hashmap()
+# ---------- CONTEXTE ----------
+Variable_mng = Variable_Interface("vg-01.dll")
+hashmap = Variable_mng.lib.Create_hashmap()
 
+CTX = {
+    "var_mng": Variable_mng,
+    "hashmap": hashmap
+}
 
+# ---------- TOKENS ----------
+tokens = (
+    'NOMBRE',
+    'IDENTIFIANT',
+    'PLUS',
+    'MOINS',
+    'EGALE'
+)
 
-# ----- TOKENS -----
-tokens = ('NOMBRE', 'IDENTIFIANT', 'PLUS', 'MOINS', 'EGALE')
-
-t_PLUS = r'\+'
-t_MOINS = r'-'
-t_EGALE = r'='
+t_PLUS   = r'\+'
+t_MOINS  = r'-'
+t_EGALE  = r'='
 t_ignore = ' \t'
 
+
 def t_NOMBRE(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'\d+(\.\d+)?'
+    if '.' in t.value:
+        t.value = float(t.value)
+    else:
+        t.value = int(t.value)
     return t
+
+
 
 def t_IDENTIFIANT(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     return t
 
+
 def t_error(t):
-    print(f"Caractère inconnu: {t.value[0]}")
-    t.lexer.skip(1)
+    raise Exception(f"Caractère invalide : {t.value[0]}")
 
-# ----- PARSER -----
-def p_expression_plus(p):
-    'expression : expression PLUS expression'
-    p[0] = p[1] + p[3]
 
-def p_expression_nombre(p):
-    'expression : NOMBRE'
+# ---------- PARSER ----------
+precedence = (
+    ('left', 'PLUS', 'MOINS'),
+)
+
+def p_program(p):
+    '''program : program statement
+               | statement'''
+    if len(p) == 3:
+        p[0] = BlockNode(p[1].statements + [p[2]])
+    else:
+        p[0] = BlockNode([p[1]])
+
+
+def p_statement_assign(p):
+    'statement : IDENTIFIANT EGALE expression'
+    p[0] = AssignNode(p[1], p[3])
+
+
+def p_statement_expr(p):
+    'statement : expression'
     p[0] = p[1]
-def p_expression_identifiant(p):
-    'expression : IDENTIFIANT EGALE NOMBRE'
-    p[0]=[p[1],p[3]]
-    varr=Variable_mng.lib.CREATE_INTEGER(p[3],bytes(p[1].encode()))
-    Variable_mng.lib.hashmap_set(hashmap,varr)
+
+
+def p_expression_binop(p):
+    '''expression : expression PLUS expression
+                  | expression MOINS expression'''
+    p[0] = BinOpNode(p[1], p[2], p[3])
+
+
+def p_expression_number(p):
+    'expression : NOMBRE'
+    p[0] = NumberNode(p[1])
+
+
+def p_expression_var(p):
+    'expression : IDENTIFIANT'
+    p[0] = VarNode(p[1])
+
 
 def p_error(p):
-    print("Erreur de syntaxe !")
+    raise Exception("Erreur de syntaxe")
 
-# ----- CONSTRUCTION -----
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+
+
 lexer = lex.lex()
 parser = yacc.yacc()
 
-# ----- TEST -----
-resultat = parser.parse(" name = 15 ")
-print("Résultat =", resultat)
-a=Variable_mng.search_var("name",hashmap)
-print(a[1])
+code = """
+a = 10.78 + 45.90 -45
+"""
 
+ast = parser.parse(code)
+result = ast.eval(CTX)
+
+print("Résultat final =", result)

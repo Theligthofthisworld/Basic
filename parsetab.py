@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'EGALE IDENTIFIANT MOINS NOMBRE PLUSexpression : expression PLUS expressionexpression : NOMBREexpression : IDENTIFIANT EGALE NOMBRE'
+_lr_signature = 'leftPLUSMOINSEGALE IDENTIFIANT MOINS NOMBRE PLUSprogram : program statement\n| statementstatement : IDENTIFIANT EGALE expressionstatement : expressionexpression : expression PLUS expression\n| expression MOINS expressionexpression : NOMBREexpression : IDENTIFIANT'
     
-_lr_action_items = {'NOMBRE':([0,4,5,],[2,2,7,]),'IDENTIFIANT':([0,4,],[3,3,]),'$end':([1,2,6,7,],[0,-2,-1,-3,]),'PLUS':([1,2,6,7,],[4,-2,4,-3,]),'EGALE':([3,],[5,]),}
+_lr_action_items = {'IDENTIFIANT':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[3,3,-2,-8,-4,-7,-1,10,10,10,-8,-3,-5,-6,]),'NOMBRE':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[5,5,-2,-8,-4,-7,-1,5,5,5,-8,-3,-5,-6,]),'$end':([1,2,3,4,5,6,10,11,12,13,],[0,-2,-8,-4,-7,-1,-8,-3,-5,-6,]),'EGALE':([3,],[7,]),'PLUS':([3,4,5,10,11,12,13,],[-8,8,-7,-8,8,-5,-6,]),'MOINS':([3,4,5,10,11,12,13,],[-8,9,-7,-8,9,-5,-6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,4,],[1,6,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement':([0,1,],[2,6,]),'expression':([0,1,7,8,9,],[4,4,11,12,13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,8 +26,13 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','hy.py',27),
-  ('expression -> NOMBRE','expression',1,'p_expression_nombre','hy.py',31),
-  ('expression -> IDENTIFIANT EGALE NOMBRE','expression',3,'p_expression_identifiant','hy.py',34),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> program statement','program',2,'p_program','lexer.py',52),
+  ('program -> statement','program',1,'p_program','lexer.py',53),
+  ('statement -> IDENTIFIANT EGALE expression','statement',3,'p_statement_assign','lexer.py',61),
+  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',66),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','lexer.py',71),
+  ('expression -> expression MOINS expression','expression',3,'p_expression_binop','lexer.py',72),
+  ('expression -> NOMBRE','expression',1,'p_expression_number','lexer.py',77),
+  ('expression -> IDENTIFIANT','expression',1,'p_expression_var','lexer.py',82),
 ]

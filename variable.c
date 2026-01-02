@@ -46,6 +46,16 @@ struct Variable* CREATE_STRING(char *value,char *name){
     return new;
 }
 
+struct Variable* CREATE_BOOL(int value , char *name){
+    struct Variable *new = malloc(sizeof(struct Variable)); 
+    if(!new) exit(1);
+    new->value.b=value;
+    new->type = TYPE_BOOL;
+    new->name = malloc(strlen(name) + 1);
+    strcpy(new->name, name);
+    return new;
+}
+
 
 
 

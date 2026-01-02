@@ -1,0 +1,87 @@
+# ast_nodes.py
+from variableC_interface import Variable_Interface
+
+
+
+
+class NumberNode:
+    def __init__(self, value):
+        self.value = value
+
+    def eval(self, ctx):
+        return self.value
+
+
+class VarNode:
+    def __init__(self, name):
+        self.name = name
+
+    def eval(self, ctx):
+        found, var = ctx["var_mng"].search_var(self.name, ctx["hashmap"])
+        if not found:
+            raise Exception(f"Variable '{self.name}' non définie")
+
+        v = ctx["var_mng"].get_pointer_value(var)
+        if(v.type==0):
+            return v.value.i
+        elif(v.type==1):
+            return v.value.f
+
+
+
+class BinOpNode:
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op
+        self.right = right
+
+    def eval(self, ctx):
+        l = self.left.eval(ctx)
+        r = self.right.eval(ctx)
+
+        if self.op == '+':
+            return l + r
+        if self.op == '-':
+            return l - r
+
+        raise Exception("Opérateur inconnu")
+
+
+class AssignNode:
+    def __init__(self, name, expr):
+        self.name = name
+        self.expr = expr
+
+    def eval(self, ctx):
+        value = self.expr.eval(ctx)
+        if(type(value)==int):
+            var = ctx["var_mng"].lib.CREATE_INTEGER(
+                value,
+                self.name.encode("utf-8")
+            )
+            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"], var)
+        elif(type(value)==float):
+            var=ctx["var_mng"].lib.CREATE_FLOAT(
+                value,
+                self.name.encode("utf-8")
+            )
+            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"],var)
+        elif(type(value)==str):
+            var=ctx["var_mng"].lib.CREATE_STRING(
+                value.encode("utf-8"),
+                self.name.encode("utf-8")
+            )
+            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"], var)
+        return value
+
+
+class BlockNode:
+    def __init__(self, statements):
+        self.statements = statements
+
+    def eval(self, ctx):
+        last = None
+        for stmt in self.statements:
+            last = stmt.eval(ctx)
+        return last
+
