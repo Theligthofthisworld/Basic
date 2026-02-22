@@ -100,7 +100,8 @@ lexer = lex.lex()
 parser = yacc.yacc()
 
 code = """
-a = 10.78 + 45.90 -45
+a = 4
+b=a+3
 """
 
 ast = parser.parse(code)
