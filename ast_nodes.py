@@ -40,7 +40,12 @@ class BinOpNode:
         r = self.right.eval(ctx)
 
         if self.op == '+':
-            return l + r
+            if(type(l)==float or type(r)==float):
+                temp_l=ctx["var_mng"].lib.make(l)
+                temp_r=ctx["var_mng"].lib.make(r)
+                return ctx["var_mng"].lib.add_double(temp_l,temp_r)
+            else:
+                return l+r
         if self.op == '-':
             return l - r
 

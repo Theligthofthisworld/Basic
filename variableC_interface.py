@@ -26,6 +26,9 @@ class Variable_Interface:
                 } value;
                 char *name;
             } ;
+            typedef struct {
+                int raw;
+            } Number;
         typedef struct hashmap hashmap;  // opaque
 
         """)
@@ -41,6 +44,9 @@ class Variable_Interface:
             const void *hashmap_set(struct hashmap *map, const void *item);
             const void *hashmap_get(const struct hashmap *map, const void *item);
             const void *get_variable(struct hashmap *map,struct Variable *var);
+            Number make(double x);
+            double to_double(Number n);
+            double add_double(Number a , Number b);
         """)
     def get_pointer_value(self,pointer):
         return self.ffi.cast("struct Variable *", pointer)

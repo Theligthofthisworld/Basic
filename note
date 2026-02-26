@@ -1,0 +1,3 @@
+J'essayais de gerer le problème avec les nombres flottantens en les additionnant j'obtennais des trucs 
+comme 2.200000000002 avec le fixed point ca marche aevc le c c'est l'implémentation en python qui bug
+les résultats des calculs font zero

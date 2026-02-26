@@ -6,6 +6,7 @@
 
 /* To compile the file gcc -shared -o vg-01.dll variable.c hashmap.c -Wl,--out-implib */
 
+// Variable structure
 struct Variable* CREATE_INTEGER(long long int value , char *name){
     struct Variable *new = malloc(sizeof(struct Variable)); 
     if(!new) exit(1);
@@ -55,10 +56,10 @@ struct Variable* CREATE_BOOL(int value , char *name){
     strcpy(new->name, name);
     return new;
 }
+// END
 
 
-
-
+// USEFUL
 int Var_free(void *item) {
     struct Variable *v = item;
     if (v->name) free(v->name);
@@ -84,7 +85,24 @@ struct hashmap* Create_hashmap(void){
 const void *get_variable(struct hashmap *map,struct Variable *var){
     return hashmap_get(map,&var);
 }
+//END
 
+// FLOAT CALCULUS PRECISIONS
+
+Number make(double x){
+    Number temp;
+    temp.raw=(int)(SCALE*x);
+    return temp;
+}
+
+double to_double(Number n){
+    return (double)n.raw / SCALE;
+}
+double add_double(Number a, Number b){
+    Number r;
+    r.raw = a.raw + b.raw;
+    return to_double(r);
+}
 /*int main(void){
     //setbuf(stdout, NULL);
     //fflush(stdout);

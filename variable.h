@@ -1,10 +1,15 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
+#define SCALE 1000000000
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "hashmap.h"
+
+typedef struct {
+    int raw;
+} Number;
 
 typedef enum {
     TYPE_INT,
@@ -35,6 +40,9 @@ int Variable_compare(const void *a,const void *b, void *udata);
 uint64_t Variable_hash(const void *item, uint64_t seed0, uint64_t seed1);
 struct hashmap*  Create_hashmap(void);
 const void *get_variable(struct hashmap *map,struct Variable *var);
+Number make(double x);
+double to_double(Number n);
+double add_double(Number a , Number b);
 
 
 #endif
