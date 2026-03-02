@@ -47,6 +47,7 @@ class Variable_Interface:
             Number make(double x);
             double to_double(Number n);
             double add_double(Number a , Number b);
+            void debug_scale();
         """)
     def get_pointer_value(self,pointer):
         return self.ffi.cast("struct Variable *", pointer)

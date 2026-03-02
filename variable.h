@@ -43,6 +43,7 @@ const void *get_variable(struct hashmap *map,struct Variable *var);
 Number make(double x);
 double to_double(Number n);
 double add_double(Number a , Number b);
+void debug_scale();
 
 
 #endif

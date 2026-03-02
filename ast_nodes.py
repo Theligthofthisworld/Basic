@@ -1,6 +1,6 @@
 # ast_nodes.py
 from variableC_interface import Variable_Interface
-
+import ctypes
 
 
 
@@ -90,3 +90,8 @@ class BlockNode:
             last = stmt.eval(ctx)
         return last
 
+if __name__=="__main__":
+    a=Variable_Interface("vg-01.dll")
+    hasmap=a.lib.Create_hashmap()
+    s=a.lib.CREATE_STRING(b"hashmap",b"hff")
+    print(a.get_string_value(s.name))

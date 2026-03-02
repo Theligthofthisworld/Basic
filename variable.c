@@ -89,6 +89,10 @@ const void *get_variable(struct hashmap *map,struct Variable *var){
 
 // FLOAT CALCULUS PRECISIONS
 
+void debug_scale() {
+    printf("SCALE dans variable.c = %d\n", SCALE);
+}
+
 Number make(double x){
     Number temp;
     temp.raw=(int)(SCALE*x);
