@@ -32,6 +32,8 @@ class VarNode:
             return v.value.i
         elif(v.type==1):
             return v.value.f
+        elif (v.type==2):
+            return ctx["var_mng"].get_string_value(v.value.s)
 
 
 
@@ -63,6 +65,11 @@ class AssignNode:
         self.name = name
         self.expr = expr
 
+    def _store_variable(self, ctx, var):
+        old_var = ctx["var_mng"].lib.hashmap_set(ctx["hashmap"], var)
+        if old_var != ctx["var_mng"].ffi.NULL:
+            ctx["var_mng"].lib.Var_free(old_var)
+
     def eval(self, ctx):
         value = self.expr.eval(ctx)
         if(type(value)==int):
@@ -70,19 +77,19 @@ class AssignNode:
                 value,
                 self.name.encode("utf-8")
             )
-            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"], var)
+            self._store_variable(ctx, var)
         elif(type(value)==float):
             var=ctx["var_mng"].lib.CREATE_FLOAT(
                 value,
                 self.name.encode("utf-8")
             )
-            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"],var)
+            self._store_variable(ctx, var)
         elif(type(value)==str):
             var=ctx["var_mng"].lib.CREATE_STRING(
                 value.encode("utf-8"),
                 self.name.encode("utf-8")
             )
-            ctx["var_mng"].lib.hashmap_set(ctx["hashmap"], var)
+            self._store_variable(ctx, var)
         return value
 
 

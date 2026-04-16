@@ -103,35 +103,4 @@ double add_double(Number a, Number b){
     r.raw = a.raw + b.raw;
     return to_double(r);
 }
-/*int main(void){
-    //setbuf(stdout, NULL);
-    //fflush(stdout);
-    struct hashmap *map = Create_hashmap();
-    //printf("Code : ") n'effacez pas ici sinon rien n'apparaitras dans le terminal DONT ERASE THIS LINES
-    struct Variable *v = CREATE_FLOAT(45.5656,"papa");
-    
-    printf("%f",v->value.f);
-    Var_free(v);
-    hashmap_free(map);
 
-    return 0;
-}*/
-
-int main(void){
-    struct hashmap *map = Create_hashmap();
-
-    struct Variable *v = CREATE_FLOAT(45.5656, "papa");
-
-    hashmap_set(map, v);   
-
-    struct Variable *var = hashmap_get(map, v);
-
-    if (var) {
-        printf("%f\n", var->value.f);
-    } else {
-        printf("Variable non trouvée\n");
-    }
-
-    hashmap_free(map);
-    return 0;
-}
