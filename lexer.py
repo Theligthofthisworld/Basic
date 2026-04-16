@@ -32,6 +32,7 @@ def t_NOMBRE(t):
     r'-?\d+(\.\d+)?'
     if '.' in t.value:
         t.value = float(t.value)
+        print(t.value)
     else:
         t.value = int(t.value)
     return t
@@ -100,7 +101,7 @@ lexer = lex.lex()
 parser = yacc.yacc()
 
 code = """
-a = 4.4+3.6
+a = 4.5+5.8
 """
 
 ast = parser.parse(code)

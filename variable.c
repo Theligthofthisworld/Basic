@@ -91,7 +91,7 @@ const void *get_variable(struct hashmap *map,struct Variable *var){
 
 Number make(double x){
     Number temp;
-    temp.raw=(int)(SCALE*x);
+    temp.raw=(int)(x*SCALE);
     return temp;
 }
 
