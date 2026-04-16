@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMOINSEGALE IDENTIFIANT MOINS NOMBRE PLUSprogram : program statement\n| statementstatement : IDENTIFIANT EGALE expressionstatement : expressionexpression : expression PLUS expression\n| expression MOINS expressionexpression : NOMBREexpression : IDENTIFIANT'
+_lr_signature = 'leftPLUSMOINSEGALE IDENTIFIANT MOINS NOMBRE PLUS STRINGprogram : program statement\n| statementstatement : IDENTIFIANT EGALE expressionstatement : expressionexpression : expression PLUS expression\n| expression MOINS expressionexpression : NOMBREexpression : IDENTIFIANTexpression : STRING'
     
-_lr_action_items = {'IDENTIFIANT':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[3,3,-2,-8,-4,-7,-1,10,10,10,-8,-3,-5,-6,]),'NOMBRE':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[5,5,-2,-8,-4,-7,-1,5,5,5,-8,-3,-5,-6,]),'$end':([1,2,3,4,5,6,10,11,12,13,],[0,-2,-8,-4,-7,-1,-8,-3,-5,-6,]),'EGALE':([3,],[7,]),'PLUS':([3,4,5,10,11,12,13,],[-8,8,-7,-8,8,-5,-6,]),'MOINS':([3,4,5,10,11,12,13,],[-8,9,-7,-8,9,-5,-6,]),}
+_lr_action_items = {'IDENTIFIANT':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[3,3,-2,-8,-4,-7,-9,-1,11,11,11,-8,-3,-5,-6,]),'NOMBRE':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[5,5,-2,-8,-4,-7,-9,-1,5,5,5,-8,-3,-5,-6,]),'STRING':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[6,6,-2,-8,-4,-7,-9,-1,6,6,6,-8,-3,-5,-6,]),'$end':([1,2,3,4,5,6,7,11,12,13,14,],[0,-2,-8,-4,-7,-9,-1,-8,-3,-5,-6,]),'EGALE':([3,],[8,]),'PLUS':([3,4,5,6,11,12,13,14,],[-8,9,-7,-9,-8,9,-5,-6,]),'MOINS':([3,4,5,6,11,12,13,14,],[-8,10,-7,-9,-8,10,-5,-6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'statement':([0,1,],[2,6,]),'expression':([0,1,7,8,9,],[4,4,11,12,13,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement':([0,1,],[2,7,]),'expression':([0,1,8,9,10,],[4,4,12,13,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,12 +27,13 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> program statement','program',2,'p_program','lexer.py',52),
-  ('program -> statement','program',1,'p_program','lexer.py',53),
-  ('statement -> IDENTIFIANT EGALE expression','statement',3,'p_statement_assign','lexer.py',61),
-  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',66),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','lexer.py',71),
-  ('expression -> expression MOINS expression','expression',3,'p_expression_binop','lexer.py',72),
-  ('expression -> NOMBRE','expression',1,'p_expression_number','lexer.py',77),
-  ('expression -> IDENTIFIANT','expression',1,'p_expression_var','lexer.py',82),
+  ('program -> program statement','program',2,'p_program','lexer.py',62),
+  ('program -> statement','program',1,'p_program','lexer.py',63),
+  ('statement -> IDENTIFIANT EGALE expression','statement',3,'p_statement_assign','lexer.py',71),
+  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',76),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','lexer.py',81),
+  ('expression -> expression MOINS expression','expression',3,'p_expression_binop','lexer.py',82),
+  ('expression -> NOMBRE','expression',1,'p_expression_number','lexer.py',87),
+  ('expression -> IDENTIFIANT','expression',1,'p_expression_var','lexer.py',92),
+  ('expression -> STRING','expression',1,'p_expression_string','lexer.py',96),
 ]

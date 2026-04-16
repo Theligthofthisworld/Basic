@@ -1,6 +1,12 @@
 # ast_nodes.py
-from variableC_interface import Variable_Interface
 
+
+class StringNode:
+    def __init__(self, value):
+        self.value = value
+
+    def eval(self, ctx):
+        return self.value
 
 
 

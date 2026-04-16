@@ -19,7 +19,8 @@ tokens = (
     'IDENTIFIANT',
     'PLUS',
     'MOINS',
-    'EGALE'
+    'EGALE',
+    'STRING'
 )
 
 t_PLUS   = r'\+'
@@ -37,6 +38,10 @@ def t_NOMBRE(t):
         t.value = int(t.value)
     return t
 
+def t_STRING(t):
+    r'"([^"\\]|\\.)*"'
+    t.value = t.value[1:-1]  # enlève les quotes
+    return t
 
 
 def t_IDENTIFIANT(t):
@@ -87,6 +92,9 @@ def p_expression_var(p):
     'expression : IDENTIFIANT'
     p[0] = VarNode(p[1])
 
+def p_expression_string(p):
+    'expression : STRING'
+    p[0] = StringNode(p[1])
 
 def p_error(p):
     raise Exception("Erreur de syntaxe")
@@ -101,10 +109,11 @@ lexer = lex.lex()
 parser = yacc.yacc()
 
 code = """
-a = 4.5+5.8
+a = "f"
 """
+
 
 ast = parser.parse(code)
 result = ast.eval(CTX)
-
+#print(ast)
 print("Résultat final =", result)
