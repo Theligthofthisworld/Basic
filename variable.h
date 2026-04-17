@@ -1,6 +1,6 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
-#define SCALE 1000000000
+#define SCALE 100000000
 
 #include <stdio.h>
 #include <stdlib.h>

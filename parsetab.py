@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMOINSEGALE IDENTIFIANT MOINS NOMBRE PLUSprogram : program statement\n| statementstatement : IDENTIFIANT EGALE expressionstatement : expressionexpression : expression PLUS expression\n| expression MOINS expressionexpression : NOMBREexpression : IDENTIFIANT'
+_lr_signature = 'leftDOUBLE_EGALEINFERIEUR_EGALESUPERIEUR_EGALEINFERIEURSUPERIEURDIFFERENTleftPLUSMOINSDIFFERENT DOUBLE_EGALE EGALE ELSE IDENTIFIANT IF INFERIEUR INFERIEUR_EGALE LBRACE LPAREN MOINS NOMBRE PLUS RBRACE RPAREN STRING SUPERIEUR SUPERIEUR_EGALE THENprogram : statementsstatements : statements statementstatements : statementstatement : IDENTIFIANT EGALE expressionstatement : IF expression THEN statementstatement : IF expression THEN statement ELSE statementstatement : blockstatement : expressionblock : LBRACE statements RBRACEblock : LBRACE RBRACEexpression : expression DOUBLE_EGALE expression\n| expression INFERIEUR_EGALE expression\n| expression SUPERIEUR_EGALE expression\n| expression INFERIEUR expression\n| expression SUPERIEUR expression\n| expression DIFFERENT expressionexpression : expression PLUS expression\n| expression MOINS expressionexpression : NOMBREexpression : IDENTIFIANTexpression : STRINGexpression : LPAREN expression RPAREN'
     
-_lr_action_items = {'IDENTIFIANT':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[3,3,-2,-8,-4,-7,-1,10,10,10,-8,-3,-5,-6,]),'NOMBRE':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,],[5,5,-2,-8,-4,-7,-1,5,5,5,-8,-3,-5,-6,]),'$end':([1,2,3,4,5,6,10,11,12,13,],[0,-2,-8,-4,-7,-1,-8,-3,-5,-6,]),'EGALE':([3,],[7,]),'PLUS':([3,4,5,10,11,12,13,],[-8,8,-7,-8,8,-5,-6,]),'MOINS':([3,4,5,10,11,12,13,],[-8,9,-7,-8,9,-5,-6,]),}
+_lr_action_items = {'IDENTIFIANT':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[4,4,-3,-20,-8,23,-7,4,-19,-21,23,-2,23,23,23,23,23,23,23,23,23,-20,4,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,4,-9,-22,-5,4,-6,]),'IF':([0,2,3,4,5,7,8,9,10,12,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[6,6,-3,-20,-8,-7,6,-19,-21,-2,-20,6,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,6,-9,-22,-5,6,-6,]),'LBRACE':([0,2,3,4,5,7,8,9,10,12,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[8,8,-3,-20,-8,-7,8,-19,-21,-2,-20,8,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,8,-9,-22,-5,8,-6,]),'NOMBRE':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[9,9,-3,-20,-8,9,-7,9,-19,-21,9,-2,9,9,9,9,9,9,9,9,9,-20,9,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,9,-9,-22,-5,9,-6,]),'STRING':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[10,10,-3,-20,-8,10,-7,10,-19,-21,10,-2,10,10,10,10,10,10,10,10,10,-20,10,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,10,-9,-22,-5,10,-6,]),'LPAREN':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,],[11,11,-3,-20,-8,11,-7,11,-19,-21,11,-2,11,11,11,11,11,11,11,11,11,-20,11,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,11,-9,-22,-5,11,-6,]),'$end':([1,2,3,4,5,7,9,10,12,23,25,27,28,29,30,31,32,33,34,35,37,38,39,41,],[0,-1,-3,-20,-8,-7,-19,-21,-2,-20,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,-9,-22,-5,-6,]),'RBRACE':([3,4,5,7,8,9,10,12,23,24,25,27,28,29,30,31,32,33,34,35,37,38,39,41,],[-3,-20,-8,-7,25,-19,-21,-2,-20,37,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,-9,-22,-5,-6,]),'EGALE':([4,],[13,]),'DOUBLE_EGALE':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,14,-19,-21,14,-20,14,14,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'INFERIEUR_EGALE':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,15,-19,-21,15,-20,15,15,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'SUPERIEUR_EGALE':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,16,-19,-21,16,-20,16,16,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'INFERIEUR':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,17,-19,-21,17,-20,17,17,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'SUPERIEUR':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,18,-19,-21,18,-20,18,18,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'DIFFERENT':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,19,-19,-21,19,-20,19,19,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'PLUS':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,20,-19,-21,20,-20,20,20,20,20,20,20,20,20,-17,-18,-22,]),'MOINS':([4,5,9,10,22,23,26,27,28,29,30,31,32,33,34,35,38,],[-20,21,-19,-21,21,-20,21,21,21,21,21,21,21,21,-17,-18,-22,]),'ELSE':([4,5,7,9,10,23,25,27,28,29,30,31,32,33,34,35,37,38,39,41,],[-20,-8,-7,-19,-21,-20,-10,-4,-11,-12,-13,-14,-15,-16,-17,-18,-9,-22,40,-6,]),'THEN':([9,10,22,23,28,29,30,31,32,33,34,35,38,],[-19,-21,36,-20,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),'RPAREN':([9,10,23,26,28,29,30,31,32,33,34,35,38,],[-19,-21,-20,38,-11,-12,-13,-14,-15,-16,-17,-18,-22,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'statement':([0,1,],[2,6,]),'expression':([0,1,7,8,9,],[4,4,11,12,13,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statements':([0,8,],[2,24,]),'statement':([0,2,8,24,36,40,],[3,12,3,12,39,41,]),'expression':([0,2,6,8,11,13,14,15,16,17,18,19,20,21,24,36,40,],[5,5,22,5,26,27,28,29,30,31,32,33,34,35,5,5,5,]),'block':([0,2,8,24,36,40,],[7,7,7,7,7,7,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,12 +27,26 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> program statement','program',2,'p_program','lexer.py',52),
-  ('program -> statement','program',1,'p_program','lexer.py',53),
-  ('statement -> IDENTIFIANT EGALE expression','statement',3,'p_statement_assign','lexer.py',61),
-  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',66),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','lexer.py',71),
-  ('expression -> expression MOINS expression','expression',3,'p_expression_binop','lexer.py',72),
-  ('expression -> NOMBRE','expression',1,'p_expression_number','lexer.py',77),
-  ('expression -> IDENTIFIANT','expression',1,'p_expression_var','lexer.py',82),
+  ('program -> statements','program',1,'p_program','lexer.py',109),
+  ('statements -> statements statement','statements',2,'p_statements_many','lexer.py',113),
+  ('statements -> statement','statements',1,'p_statements_one','lexer.py',117),
+  ('statement -> IDENTIFIANT EGALE expression','statement',3,'p_statement_assign','lexer.py',121),
+  ('statement -> IF expression THEN statement','statement',4,'p_statement_if','lexer.py',125),
+  ('statement -> IF expression THEN statement ELSE statement','statement',6,'p_statement_if_else','lexer.py',129),
+  ('statement -> block','statement',1,'p_statement_block','lexer.py',133),
+  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',137),
+  ('block -> LBRACE statements RBRACE','block',3,'p_block_many','lexer.py',141),
+  ('block -> LBRACE RBRACE','block',2,'p_block_empty','lexer.py',145),
+  ('expression -> expression DOUBLE_EGALE expression','expression',3,'p_expression_compare','lexer.py',149),
+  ('expression -> expression INFERIEUR_EGALE expression','expression',3,'p_expression_compare','lexer.py',150),
+  ('expression -> expression SUPERIEUR_EGALE expression','expression',3,'p_expression_compare','lexer.py',151),
+  ('expression -> expression INFERIEUR expression','expression',3,'p_expression_compare','lexer.py',152),
+  ('expression -> expression SUPERIEUR expression','expression',3,'p_expression_compare','lexer.py',153),
+  ('expression -> expression DIFFERENT expression','expression',3,'p_expression_compare','lexer.py',154),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','lexer.py',159),
+  ('expression -> expression MOINS expression','expression',3,'p_expression_binop','lexer.py',160),
+  ('expression -> NOMBRE','expression',1,'p_expression_number','lexer.py',164),
+  ('expression -> IDENTIFIANT','expression',1,'p_expression_var','lexer.py',168),
+  ('expression -> STRING','expression',1,'p_expression_string','lexer.py',172),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','lexer.py',176),
 ]
