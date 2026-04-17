@@ -1,10 +1,6 @@
 # ast_nodes.py
-<<<<<<< HEAD
 from variableC_interface import Variable_Interface
 import ctypes
-=======
-
->>>>>>> temp_merge_66e54ad
 
 class StringNode:
     def __init__(self, value):
@@ -164,12 +160,5 @@ class BlockNode:
         for stmt in self.statements:
             last = stmt.eval(ctx)
         return last
-<<<<<<< HEAD
 
-if __name__=="__main__":
-    a=Variable_Interface("vg-01.dll")
-    hasmap=a.lib.Create_hashmap()
-    s=a.lib.CREATE_STRING(b"hashmap",b"hff")
-    print(a.get_string_value(s.name))
-=======
->>>>>>> temp_merge_66e54ad
+

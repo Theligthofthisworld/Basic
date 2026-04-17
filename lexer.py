@@ -1,16 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-from ast_nodes import (
-    AssignNode,
-    BinOpNode,
-    BlockNode,
-    CompareNode,
-    NumberNode,
-    IfNode,
-    StringNode,
-    VarNode,
-)
+from ast_nodes import *
 from variableC_interface import Variable_Interface
 
 
